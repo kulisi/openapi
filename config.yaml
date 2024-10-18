@@ -1,0 +1,31 @@
+#
+gin:
+  use:
+  addr:
+zap:
+  use:
+  level:
+  prefix:
+  format:
+  director:
+  encode-level:
+  stacktrace-key:
+  show-line:
+  log-in-console:
+  retention-day:
+gorm:
+  use:
+  mssql:
+    prefix:
+    port:
+    config:
+    db-name:
+    username:
+    password:
+    path:
+    engine:
+    log-mode:
+    max-idle-conns:
+    max-open-conns: 
+    singular:
+    log-zap:

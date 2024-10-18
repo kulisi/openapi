@@ -1,0 +1,52 @@
+#
+gin:
+  # 是否启用web服务
+  use: true
+  # 服务端口
+  addr: 8080
+  #优雅关闭等待时间(秒)
+  waitfor: 5
+zap:
+  #是否使用 true/false
+  use: true
+  #日志级别 debug/info/warn/error/fatal
+  level: info
+  #日志前缀
+  prefix: '[OpenApi]'
+  #输出方式 console/json;default console
+  format: console
+  #存储目录
+  director: log.db
+  #编码级别
+  encode-level: CapitalLevelEncoder
+  #栈名
+  stacktrace-key: stacktrace
+  #显示行 true/false
+  show-line: true
+  #输出控制台 true/false
+  log-in-console: true
+  #日志保留天数 超出该天数的日志文件自动删除
+  retention-day: 1
+gorm:
+  # 数据库类型
+  use:
+  # sqlserver 数据库配置
+  mssql:
+    prefix:
+    port:
+    config:
+    db-name:
+    username:
+    password:
+    path:
+    engine:
+    log-mode:
+    max-idle-conns:
+    max-open-conns:
+    singular:
+    log-zap:
+service:
+  name:
+  display-name:
+  description:
+
