@@ -30,6 +30,9 @@ func (w WebServer) Stop(svc service.Service) error {
 }
 
 func NewDefaultOpenApiServiceByOpenApi(api *OpenApi) (service.Service, error) {
+	if api._Handler == nil {
+		return nil, errors.New("openapi handler is nil")
+	}
 	webServiceConfig := &WebServer{
 		cfg: &service.Config{
 			Name:        api.OpenApiConfig.Service.Name,
