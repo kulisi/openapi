@@ -29,11 +29,7 @@ func (w WebServer) Stop(svc service.Service) error {
 	return w.stopFunc(w.web)
 }
 
-func NewDefaultOpenApiService(handler http.Handler) (*OpenApi, service.Service, error) {
-	api, err := NewDefaultOpenApi("config", "yaml", ".")
-	if err != nil {
-		return nil, nil, err
-	}
+func NewDefaultOpenApiServiceByOpenApi(api *OpenApi) (service.Service, error) {
 	webServiceConfig := &WebServer{
 		cfg: &service.Config{
 			Name:        api.OpenApiConfig.Service.Name,
@@ -41,7 +37,7 @@ func NewDefaultOpenApiService(handler http.Handler) (*OpenApi, service.Service, 
 			Description: api.OpenApiConfig.Service.Description,
 		},
 		startFunc: func(server *http.Server) {
-			server = &http.Server{Addr: fmt.Sprintf(":%s", api.OpenApiConfig.Gin.Addr), Handler: handler}
+			server = &http.Server{Addr: fmt.Sprintf(":%s", api.OpenApiConfig.Gin.Addr), Handler: api._Handler}
 			if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 				panic(err)
 			}
@@ -60,7 +56,7 @@ func NewDefaultOpenApiService(handler http.Handler) (*OpenApi, service.Service, 
 	}
 	svc, err := service.New(webServiceConfig, webServiceConfig.cfg)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
-	return api, svc, nil
+	return svc, nil
 }
