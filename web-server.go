@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/kardianos/service"
+	"log"
 	"net/http"
 	"time"
 )
@@ -49,11 +50,13 @@ func NewDefaultOpenApiServiceByOpenApi(api *OpenApi) (service.Service, error) {
 			ctx, cancel := context.WithTimeout(context.Background(), api.OpenApiConfig.Gin.WaitFor*time.Second)
 			defer cancel()
 			if err := server.Shutdown(ctx); err != nil {
-				return err
+				log.Println("shutdown error: ", err)
 			}
 			select {
 			case <-ctx.Done():
+				log.Println("timeout of 5 second")
 			}
+			log.Println("server exiting")
 			return nil
 		},
 	}
